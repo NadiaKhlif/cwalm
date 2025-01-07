@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corpus Viewer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .sentence-row {
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .analysis-table {
+      display: none;
+      width: 100%;
+    }
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+    }
+  </style>
+</head>
+<body>
+  
+ <!-- Navbar Section -->
+<!-- Navbar Section -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">CWALM Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Corpus
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="corpus1.html">Story 1</a></li>
+            <li><a class="dropdown-item" href="corpus2.html">Story 2</a></li>
+            <li><a class="dropdown-item" href="corpus3.html">Story 3</a></li>
+            <li><a class="dropdown-item" href="corpus4.html">Story 4</a></li>
+            <li><a class="dropdown-item" href="corpus5.html">Story 5</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Corpus dropdown at the right end of the navbar -->
+      <ul class="navbar-nav ms-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="container my-5">
+    <!-- Search Section -->
+    <div class="mb-4">
+      <label for="search-input" class="form-label">Search by TOKEN or Glosses</label>
+      <div class="input-group">
+        <input type="text" id="search-input" class="form-control" placeholder="Enter TOKEN or Glosses">
+        <button id="search-button" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div id="corpus-display" dir="rtl">
+      <!-- Sentences and their analysis will be dynamically generated -->
+    </div>
+  </div>
+
+  <script>
+    let corpusData = []; // To hold the entire dataset
+
+    // Load JSON data dynamically
+    fetch('Data/corpus4.json')
+      .then(response => response.json())
+      .then(data => {
+        corpusData = data.corpus;
+        displaySentences(corpusData);
+      })
+      .catch(error => console.error('Error loading corpus.json:', error));
+
+    // Function to display sentences and their token analyses
+    function displaySentences(data, searchTerm = "") {
+      const displayDiv = document.getElementById('corpus-display');
+      displayDiv.innerHTML = ''; // Clear existing content
+
+      data.forEach((sentenceObj) => {
+        // Remove duplicate tokens and concatenate Arabic tokens to form the sentence
+        const sentenceTokens = [...new Set(sentenceObj.sentence.map(tokenObj => tokenObj.TOKEN || ''))];
+        let sentenceText = sentenceTokens.join(' ');
+
+        // Highlight search term in the sentence text
+        if (searchTerm) {
+          sentenceText = highlightText(sentenceText, searchTerm);
+        }
+
+        // Create the sentence row
+        const sentenceRow = document.createElement('div');
+        sentenceRow.classList.add('sentence-row', 'my-3', 'p-2', 'border', 'bg-light');
+        sentenceRow.innerHTML = sentenceText;
+
+        // Create the analysis table for tokens in this sentence
+        const analysisTable = document.createElement('table');
+        analysisTable.classList.add('table', 'table-bordered', 'table-hover', 'analysis-table');
+
+        // Table header
+        const headerRow = `
+          <thead class="table-dark">
+            <tr>
+              <th>TOKEN</th>
+              <th>Lemma</th>
+              <th>Glosses</th>
+              <th>Vocalised Token</th>
+              <th>Arabic-msd</th>
+            </tr>
+          </thead>`;
+        const tableBody = document.createElement('tbody');
+
+        sentenceObj.sentence.forEach(tokenObj => {
+          // Skip punctuation and any other non-token elements
+          if (tokenObj.msd === "Punctuation") return;
+
+          const row = document.createElement('tr');
+          const highlightedToken = highlightText(tokenObj.TOKEN || "", searchTerm);
+          const highlightedGloss = highlightText(tokenObj.Glosses || "", searchTerm);
+
+          // Merge TOKEN and msd for tokens with msd field
+          if (tokenObj.msd) {
+            row.innerHTML = `
+              <td>${highlightedToken} (${tokenObj.msd})</td>
+              <td>${tokenObj.Lemma || ''}</td>
+              <td>${highlightedGloss}</td>
+              <td>${tokenObj["Vocalised Token"] || ''}</td>
+              <td>${tokenObj["Arabic-msd"] || ''}</td>
+            `;
+          } else {
+            row.innerHTML = `
+              <td>${highlightedToken}</td>
+              <td>${tokenObj.Lemma || ''}</td>
+              <td>${highlightedGloss}</td>
+              <td>${tokenObj["Vocalised Token"] || ''}</td>
+              <td>${tokenObj["Arabic-msd"] || ''}</td>
+            `;
+          }
+          tableBody.appendChild(row);
+        });
+
+        // Append header and body to the analysis table
+        analysisTable.innerHTML = headerRow;
+        analysisTable.appendChild(tableBody);
+
+        // Append sentence and table to the display div
+        displayDiv.appendChild(sentenceRow);
+        displayDiv.appendChild(analysisTable);
+
+        // Add toggle functionality for analysis table
+        sentenceRow.addEventListener('click', () => {
+          const isVisible = analysisTable.style.display === 'table';
+          analysisTable.style.display = isVisible ? 'none' : 'table';
+        });
+      });
+    }
+
+    // Function to search the corpus
+    function searchCorpus() {
+      const query = document.getElementById('search-input').value.trim().toLowerCase();
+      const filteredData = corpusData.filter(sentenceObj =>
+        sentenceObj.sentence.some(tokenObj =>
+          (tokenObj.TOKEN && tokenObj.TOKEN.toLowerCase().includes(query)) ||
+          (tokenObj.Glosses && tokenObj.Glosses.toLowerCase().includes(query))
+        )
+      );
+
+      displaySentences(filteredData, query);
+    }
+
+    // Attach event listener to the search button
+    document.getElementById('search-button').addEventListener('click', searchCorpus);
+
+    // Function to highlight text
+    function highlightText(text, searchTerm) {
+      if (!searchTerm) return text; // No highlighting if no search term
+      const regex = new RegExp(`(${searchTerm})`, "gi");
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer Section -->
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <p>&copy; 2025 CWALM Project. All rights reserved.</p>
+    <p>Developed by Nadia Khlif and the CWALM Research Team.</p>
+    <div class="social-icons">
+      <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

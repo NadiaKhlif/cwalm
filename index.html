@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .card-header {
+      background-color: #a0a3a77c;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .card-body {
+      border-radius: 15px;
+    }
+
+    .card-body p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .card-body img {
+      border-radius: 10px;
+    }
+
+    .container {
+      max-width: 85%;
+      margin: auto;
+    }
+
+    .btn-outline-primary {
+      border-radius: 25px;
+    }
+
+    .btn-dark {
+      border-radius: 25px;
+    }
+
+    /* For spacing between cards in the main section */
+    .row > .col-md-6 {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">CWALM Project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="corpus.html" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Corpus
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="corpus1.html">Story 1</a></li>
+              <li><a class="dropdown-item" href="corpus2.html">Story 2</a></li>
+              <li><a class="dropdown-item" href="corpus3.html">Story 3</a></li>
+              <li><a class="dropdown-item" href="corpus4.html">Story 4</a></li>
+              <li><a class="dropdown-item" href="corpus5.html">Story 5</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CWALM Project Introduction Section -->
+  <div class="card mb-4">
+    <div class="card-body" style="background-image: url('../img/teapot.jpg'); background-size: cover; background-position: center; height: 500px; padding-top: 100px;">
+      <h1 class="card-header text-center py-4">CWALM: A Lexical Corpus-based Model of Contemporary Written Arabic</h1>
+      <div class="container">
+        <p class="lead text-center" style="background-color:rgba(0,0,0,0.5); font-size: 30px; text-align: justify; color: white;">
+          This project proposes a new approach to analyze the Arabic language using corpus linguistics.
+          The main objective is to study contemporary written Arabic through a representative corpus that is defined by
+          objective criteria such as time, gender, and domain.
+          The aim is to create a lexical resource that presents Modern Standard Arabic and its dialect variations as a complex
+          and unified entity, by objectively describing written Arabic.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Goals Section -->
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6" data-aos="fade-right" data-aos-duration="3000">
+        <h2>CWALM will provide the scientific community of Social Sciences and Humanities with:</h2>
+        <div data-aos="fade-up" data-aos-duration="2000" class="mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Our Goals</h5>
+              <ul>
+                <li><b>New theoretical approach</b> to overcome the traditional description of Arabic linguistic system.</li>
+                <li><b>Final test model</b> that aims to be the first large-scale validated CWA resource.</li>
+                <li><b>Lexicographic resource</b> that could have a positive social impact on Arabic-speaking communities.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p>For more details visit: 
+          <a href="https://cwalm.ilc.cnr.it/"> <button type="button" class="btn btn-outline-primary">See more</button></a>
+        </p>
+      </div>
+
+      <!-- Image Section with animation -->
+      <div class="col-md-6" data-aos="zoom-in" data-aos-duration="2000">
+        <img src="../img/Slider_CWALM.png" alt="logo" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+  <!-- Linguistic Resources Section -->
+  <div class="container">
+    <div class="row justify-content-around bg-light py-5">
+      <div class="col-md-4" data-aos="fade-right" data-aos-duration="3000">
+        <img class="card-img-top" src="../img/draMA.jpg" alt="Card image cap" class="img-fluid">
+      </div>
+      <div class="col-md-4" data-aos="fade-left" data-aos-duration="3000">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Corpus</h2>
+            <p class="card-text" style="text-align: justify;">
+              We collected corpus data from various social media platforms to encompass a wide range of user-generated content.
+              This corpus includes data from both Tunisian and Moroccan dialects, ensuring comprehensive coverage of Colloquial Arabic Varieties.
+            </p>
+            <a href="/corpus.html"><button type="button" class="btn btn-dark">See more</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AOS JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init(); // Initialize AOS library
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Footer Section -->
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <p>&copy; 2025 CWALM Project. All rights reserved.</p>
+    <p>Developed by Nadia Khlif and the CWALM Research Team.</p>
+    <div class="social-icons">
+      <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
